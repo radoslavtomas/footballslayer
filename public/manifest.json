@@ -1,20 +1,75 @@
 {
-  "name": "footballslayer",
-  "short_name": "footballslayer",
+  "name": "Football Slayer",
+  "short_name": "fooslayer",
   "icons": [
     {
-      "src": "./img/icons/android-chrome-192x192.png",
+      "src": "./img/icons/android-36x36.png",
+      "sizes": "36x36",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/android-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/android-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/android-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/android-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/android-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "./img/icons/android-chrome-512x512.png",
+      "src": "./img/icons/apple-touch-icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/pwa-512x512.png",
       "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/tile70x70.png",
+      "sizes": "70x70",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/tile150x150.png",
+      "sizes": "150x150",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/tile310x150.png",
+      "sizes": "310x150",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/tile310x310.png",
+      "sizes": "310x310",
       "type": "image/png"
     }
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#cacdcb",
+  "theme_color": "#d40000"
 }
