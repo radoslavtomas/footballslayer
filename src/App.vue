@@ -12,10 +12,6 @@
         <div v-if="team" class="team-card">
           <small>Football Team</small>
           <h3>{{ team.name }}</h3>
-          <small>Address To Avoid</small>
-          <h3>{{ team.address }}</h3>
-          <small>Venue</small>
-          <h3>{{ team.venue }}</h3>
           <p>--------------------------------</p>
         </div>
 
@@ -35,6 +31,10 @@
           <h2 class="all-clear-sign">for next few days</h2>
         </div>
       </section>
+
+      <section class="mapWrapper" :class="{ active:mapActive }">
+        <div id="map"></div>
+      </section>
     </div>
   </div>
 </template>
@@ -42,6 +42,8 @@
 <script>
 import axios from "axios";
 import Search from "./components/Search";
+import mapboxgl from "mapbox-gl";
+import MapboxTraffic from "@mapbox/mapbox-gl-traffic";
 
 export default {
   name: "app",
@@ -52,16 +54,21 @@ export default {
     return {
       team: null,
       matchesResult: false,
+      mapActive: false,
       matches: []
     };
   },
   methods: {
     slayItLikeABrut(team) {
       this.team = team;
+      this.getMatches();
+      this.getMap();
+    },
+    getMatches() {
       axios({
         method: "get",
         url: `https://api.football-data.org/v2/teams/${
-          team.id
+          this.team.id
         }/matches?status=SCHEDULED`,
         headers: { "X-Auth-Token": process.env.VUE_APP_TOKEN }
       })
@@ -71,6 +78,31 @@ export default {
         })
         .catch(error => {
           conosle.log(error);
+        });
+    },
+    getMap() {
+      axios
+        .get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${
+            this.team.address
+          }.json?access_token=${process.env.VUE_APP_MAPTOKEN}`
+        )
+        .then(response => {
+          this.mapActive = true;
+          mapboxgl.accessToken =
+            "pk.eyJ1IjoicmFkb3NsYXZ0b21hcyIsImEiOiJjanZkeGNqY2QwZjlkNDFsYzFqNGlvYW85In0.mc8Nj4zfAoOW_ZBxspAo5g";
+          const map = new mapboxgl.Map({
+            container: "map", // container id
+            style: "mapbox://styles/mapbox/streets-v10", // stylesheet location
+            center: response.data.features[0].center, // starting position [lng, lat]
+            zoom: 13 // starting zoom
+          });
+          map.addControl(
+            new MapboxTraffic({
+              showTraffic: true,
+              showTrafficButton: false
+            })
+          );
         });
     }
   },
@@ -152,6 +184,32 @@ body {
   .all-clear-sign {
     color: #23ab5a;
     font-family: "Rock Salt", cursive;
+  }
+  .mapWrapper {
+    max-width: 800px;
+    height: 250px;
+    margin: 0 auto;
+    position: relative;
+    visibility: hidden;
+
+    &.active {
+      visibility: initial;
+    }
+
+    #map {
+      position: relative;
+      margin: 0 auto;
+      border: 2px solid #d40000;
+      border-radius: 0.25em;
+      max-width: 97%;
+      height: 97%;
+
+      .mapboxgl-canvas-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
   }
 }
 </style>
