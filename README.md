@@ -1,5 +1,7 @@
 # footballslayer
 
+## THIS PROJECT IS ARCHIVED
+
 ## Project setup
 ```
 npm install
